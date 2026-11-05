@@ -15,7 +15,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 const MONGO_URL = "mongodb://127.0.0.1:27017/WanderLust";
-app.engine("ejs", ejsMate);
+app.engine("ejs", ejsMate);                     
 app.use(express.static(path.join(__dirname, "public")));
 
 main()
@@ -72,7 +72,7 @@ app.get(
   "/listings/:id",
   wrapAsync(async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id);
+    const listing = await Listing.findById(id).populate("reviews");
     res.render("listings/show", { listing });
   }),
 );
@@ -125,7 +125,7 @@ app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => 
   await newReview.save();
   await listing.save();
   console.log("Review saved in DB");
-  res.send("new review saved");
+  res.redirect("/listings");
 }));
 
 app.all("*splat", (req, res, next) => {
