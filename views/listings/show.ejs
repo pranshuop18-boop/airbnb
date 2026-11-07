@@ -42,7 +42,7 @@
           <div class="invalid-feedback">Please write comment for review</div>
         </div>
         <br />
-        <button class="btn btn-outline-dark">SUBMIT</button>
+        <button style="border: 2px solid black !important" class="btn btn-outline-dark">SUBMIT</button>
       </form>
       <hr />
       <p><b>All Reviews</b></p>
@@ -57,8 +57,12 @@
               <p class="card-text">
                 <%= review.rating %> stars
               </p>
+              <form class="mb-3" method="post"
+                action="/listings/<%= listing._id %>/reviews/<%=review._id%>?_method=DELETE">
+                <button class="btn btn-sm btn-dark">delete</button>
+              </form>
             </div>
-            <br>
+
           </div>
           <% } %>
       </div>
