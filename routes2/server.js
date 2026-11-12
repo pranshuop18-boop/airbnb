@@ -2,12 +2,14 @@ const express = require("express");
 const app = express();
 const users = require("./routes/user.js")
 const posts = require("./routes/post.js")
+const session =require("express-session");
+app.use(session({secret :"mysecret"}));
 
-app.use("/users",users);
-app.use("/posts",posts);
+app.use("/users", users);
+app.use("/posts", posts);
 
-app.get("/", (req, res) => {
-    res.send("hiii,im root!");
+app.get("/test",(req,res)=>{
+    res.send("server");
 });
 
 app.listen(3000, () => {
