@@ -10,14 +10,14 @@ router.get("/signup", (req, res) => {
     res.render("user/signup.ejs");
 });
 
-router.post("/signup", wrapAsync(async (req, res) => {
+router.post("/signup", wrapAsync(async(req, res) => {
     try {
         let { username, email, password } = req.body;
         const newUser = new User({ username, email });
         const registeredUser = await User.register(newUser, password);
         console.log(registeredUser);
         req.flash("success", "Welcome to WanderLust");
-        res.redirect("/listings");
+        res.redirect("/login");
     } catch (err) {
         req.flash("error", err.message);
         res.redirect("/listings");
@@ -38,6 +38,14 @@ router.post("/login",
         res.redirect("/listings");
     });
 
+router.get("/logout", (req, res) => {
+    req.logout((Err) => {
+        if (Err) {
+            next(Err);
+        }
+        req.flash("error", "you are logger out");
+        res.redirect("/listings");
+    })
+})
 
 module.exports = router;
-

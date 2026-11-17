@@ -16,14 +16,14 @@ const passport = require("passport");
 const User = require("./models/user.js");
 const LocalStrategy = require("passport-local");
 const sessionOptions = {
-  secret: "mySecretCode",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-  },
+    secret: "mySecretCode",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+    },
 };
 
 app.use(session(sessionOptions));
@@ -44,9 +44,10 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  next();
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
+    next();
 });
 
 
@@ -63,34 +64,34 @@ app.use((req, res, next) => {
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
-app.use("/",userRouter);
+app.use("/", userRouter);
 
 main()
-  .then(() => {
-    console.log("Connected to DATABASES");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .then(() => {
+        console.log("Connected to DATABASES");
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+    await mongoose.connect(MONGO_URL);
 }
 
 app.get("/", (req, res) => {
-  res.render("listings/home.ejs");
+    res.render("listings/home.ejs");
 });
 
 
 app.all("*splat", (req, res, next) => {
-  next(new ExpressError(404, "page not found"));
+    next(new ExpressError(404, "page not found"));
 });
 
 app.use((err, req, res, next) => {
-  let { statusCode = 500, message } = err;
-  res.status(statusCode).send(message);
+    let { statusCode = 500, message } = err;
+    res.status(statusCode).send(message);
 });
 
 app.listen(8080, () => {
-  console.log("Server is listening on 8080 port");
+    console.log("Server is listening on 8080 port");
 });
