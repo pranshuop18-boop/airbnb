@@ -7,14 +7,14 @@
             <form method="post" action="/listings" novalidate class="needs-validation">
                 <div class="mb-3">
                     <label for="title" class="form-label">title</label>
-                    <input name="title" placeholder="Enter title" type="text" class="form-control" required>
+                    <input name="listing[title]" placeholder="Enter title" type="text" class="form-control" required>
                     <div class="valid-feedback">Looks Good</div>
                     <div class="invalid-feedback">Please enter catchyy title</div>
                 </div>
                 <br>
                 <div class="mb-3">
                     <label for="description" class="form-label">description</label>
-                    <textarea name="description" placeholder="Enter description" class="form-control"
+                    <textarea name="listing[description]" placeholder="Enter description" class="form-control"
                         required></textarea>
                     <div class="valid-feedback">WOW discription</div>
                     <div class="invalid-feedback">Please enter short discription</div>
@@ -22,28 +22,28 @@
                 <br>
                 <div class="mb-3">
                     <label for="image" class="form-label">image Link</label>
-                    <input name="image" placeholder="Enter image URL/Link" class="form-control">
+                    <input name="listing[image][url]" placeholder="Enter image URL/Link" type="url" class="form-control">
                     <div class="invalid-feedback">Please enter catchyy image</div>
                 </div>
                 <br>
                 <div class="row row-2 ">
                     <div class="mb-3 col-md-4">
                         <label for="price" class="form-label">price</label>
-                        <input name="price" placeholder="Enter price" class="form-control" required>
+                        <input name="listing[price]" placeholder="Enter price" type="number" min="0" class="form-control" required>
                         <div class="invalid-feedback">Price should be valid</div>
                     </div>
                     <br>
 
                     <div class="mb-3 col-md-8">
                         <label for="country" class="form-label">country</label>
-                        <input name="country" placeholder="Enter country" class="form-control" required>
+                        <input name="listing[country]" placeholder="Enter country" class="form-control" required>
                         <div class="invalid-feedback">Country should be valid</div>
                     </div>
                 </div>
                 <br>
                 <div class="mb-3">
                     <label for="location" class="form-label">location</label>
-                    <input name="location" placeholder="Enter location" class="form-control" required>
+                    <input name="listing[location]" placeholder="Enter location" class="form-control" required>
                     <div class="invalid-feedback">Location should be valid</div>
                 </div>
                 <br>

@@ -13,7 +13,7 @@ const userRouter = require("./routes/user.js");
 
 const flash = require("connect-flash");
 const passport = require("passport");
-const User = require("./models/user.js");
+const User = require("./models/user.js")
 const LocalStrategy = require("passport-local");
 const sessionOptions = {
     secret: "mySecretCode",
