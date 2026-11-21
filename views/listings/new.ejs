@@ -4,7 +4,7 @@
             <br>
             <h4>Create new listing </h4>
             <br>
-            <form method="post" action="/listings" novalidate class="needs-validation">
+            <form method="post" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="title" class="form-label">title</label>
                     <input name="listing[title]" placeholder="Enter title" type="text" class="form-control" required>
