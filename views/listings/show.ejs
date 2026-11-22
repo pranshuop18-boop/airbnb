@@ -43,12 +43,12 @@
                 </form>
             </div>
             <%}%>
-                <br />
+                <br>
                 <hr />
                 <% if(currUser) { %>
                     <div class="col-7 offset-3 mt-2 mb-2">
                         <br />
-                        <h3>Leave a comments</h3>
+                        <h3>Leave a Review</h3>
                         <form method="post" action="/listings/<%= listing._id %>/reviews" novalidate
                             class="needs-validation">
                             <!-- <div>
@@ -58,7 +58,7 @@
                             </div> -->
                             <div class="mb-3 mt-3">
 
-                                <label class="form-label" for="rating ">Rating</label>
+                                <label class="mb- form-label" for="rating ">Rating</label>
                                 <fieldset class="starability-slot">
                                     <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]"
                                         value="1" checked aria-label="No rating." />
@@ -86,34 +86,54 @@
                                 class="btn btn-outline-dark">SUBMIT</button>
                         </form>
                         <hr />
-                        <p><b>All Reviews</b></p>
-                        <div class="row">
-                            <% for(review of listing.reviews){%>
-                                <div class="card col-5 mt-2 ms-1">
-                                    <div class="card-body">
-                                        <h5 class="text-title">@<%= review.author.username %>
-                                        </h5>
-                                        <p class="card-text">
-                                            <%= review.comment %>
-                                        </p>
-                                        <p class="card-text">
-                                            <%= review.rating %> stars
-                                        </p>
-                                        <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
-                                        <form class="mb-3" method="post"
-                                            action="/listings/<%= listing._id %>/reviews/<%=review._id%>?_method=DELETE">
-                                            <button class="btn btn-sm btn-dark">delete</button>
-                                        </form>
-                                    </div>
+                        <% } %>
+                            <% if(listing.reviews.length> 0 ){ %>
+                                <div class="row col-7 offset-3 mt-2 mb-2">
+                                    <p><b>All Reviews</b></p>
+                                    <% for(review of listing.reviews){%>
+                                        <div class="card col-5 mt-2 ms-1">
+                                            <div class="card-body">
+                                                <h5 class="text-title">@<%= review.author.username %>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <%= review.comment %>
+                                                </p>
+                                                <p class="card-text">
+                                                    <%= review.rating %> stars
+                                                </p>
+                                                <p class="starability-result card-text"
+                                                    data-rating="<%= review.rating %>">
+                                                </p>
+                                                <form class="mb-3" method="post"
+                                                    action="/listings/<%= listing._id %>/reviews/<%=review._id%>?_method=DELETE">
+                                                    <button class="btn btn-sm btn-dark">delete</button>
+                                                </form>
+                                            </div>
 
+                                        </div>
+                                        <% } %>
                                 </div>
-                                <% } %>
-                        </div>
+                                <% }%>
 
                     </div>
-                    <% } %>
+                    <div class="col-7 offset-3 mt-2 mb-2">
+                        <h3>Where you Will be</h3>
+                        <div id="map"></div>
+                    </div>
+
+    </div>
+    </div>
     </div>
 
-    %>
-    </div>
-    </div>
+    <script>
+        let mapToken = "<%=process.env.MAP_TOKEN%>";
+        console.log(mapToken);
+        const map = new mapboxgl.Map({
+            accessToken: mapToken,
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v11',
+            center: [79.5435, 22.0869],
+            zoom: 3
+        });
+
+    </script>

@@ -33,9 +33,15 @@ module.exports.showListing = async (req, res) => {
 
 module.exports.createListing = async (req, res) => {
     const newListing = new Listing(req.body.listing);
-    console.log(req.user);
+    if (req.file) {
+        newListing.image = {
+            filename: req.file.filename,
+            url: req.file.path,
+        };
+    }
     newListing.owner = req.user._id;
     await newListing.save();
+    console.log(req.file);
     req.flash("success", "New Listings Created");
     res.redirect("/listings");
 };
@@ -48,12 +54,23 @@ module.exports.renderEditForm = async (req, res) => {
         req.flash("error", "listing you trying to edit is unavailable");
         res.redirect("/listings");
     }
-    res.render("listings/edit.ejs", { listing });
+
+    let originalImageUrl =listing.image.url;
+    originalImageUrl = originalImageUrl.replace("/upload","/upload/h_300/w_150");
+    res.render("listings/edit.ejs", { listing, originalImageUrl });
 };
 
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, req.body.listing, { runValidators: true });
+    const updateData = { ...req.body.listing };
+    if (req.file) {
+        updateData.image = {
+            url: req.file.path,
+            filename: req.file.filename,
+        };
+    }
+    await Listing.findByIdAndUpdate(id, updateData, { runValidators: true });
+
     req.flash("success", "Listing Updated");
     res.redirect(`/listings/${id}`);
 };

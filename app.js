@@ -1,3 +1,6 @@
+require("dotenv").config();
+// console.log(process.env.CLOUD_NAME);
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -14,8 +17,8 @@ const userRouter = require("./routes/user.js");
 const flash = require("connect-flash");
 const passport = require("passport");
 const User = require("./models/user.js")
-const LocalStrategy = require("passport-local");
-const sessionOptions = {
+const LocalStrategy = require("passport-local");            
+const sessionOptions = {                                    
     secret: "mySecretCode",
     resave: false,
     saveUninitialized: true,
@@ -88,6 +91,7 @@ app.all("*splat", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+    console.error(err);
     let { statusCode = 500, message } = err;
     res.status(statusCode).send(message);
 });
