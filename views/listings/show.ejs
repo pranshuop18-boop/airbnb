@@ -1,4 +1,7 @@
 <% layout("/layouts/boilerplate.ejs") %>
+    <script>
+        const mapToken = "<%=process.env.MAP_TOKEN%>";
+    </script>
     <div class="row mt-3">
         <div class="col-8 offset-3">
             <h1>
@@ -125,15 +128,4 @@
     </div>
     </div>
 
-    <script>
-        let mapToken = "<%=process.env.MAP_TOKEN%>";
-        console.log(mapToken);
-        const map = new mapboxgl.Map({
-            accessToken: mapToken,
-            container: 'map',
-            style: 'mapbox://styles/mapbox/light-v11',
-            center: [79.5435, 22.0869],
-            zoom: 3
-        });
-
-    </script>
+    <script src="/js/map.js"></script>
